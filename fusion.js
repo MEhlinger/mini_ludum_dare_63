@@ -34,9 +34,11 @@ var map = {
 	width: 100000
 };
 
-var stars = {
-	star1 : {x:0, y:0}
-}
+var stars = [
+	[(map.width/2) + 50, (map.height/2) + 50],
+	[(map.width/2) - 45, (map.height/2) + 20],
+	[(map.width/2) + 150, (map.height/2) - 15]
+];
 
 
 // User Input
@@ -50,9 +52,6 @@ var setup = function() {
 	pc.y = map.height / 2;
 	pc.renderX = canvas.width / 2;
 	pc.renderY = canvas.height / 2;
-
-	stars.star1.x = pc.x + 50;
-	stars.star1.y = pc.y + 50;
 };
 
 // Update
@@ -88,14 +87,12 @@ var update = function (modifier) {
 };
 
 // Check if something on the map is on the canvas
-var isOnScreen = function(objectWithXAndY) {
-	// Object passed as argument MUST have x and y attributes!
-	// This is implicit, gross, --CONSIDER REFACTORING--
+var isOnScreen = function(objectInSpaceX, objectInSpaceY) {
 	if (
-		(objectWithXAndY.x <= pc.x + canvas.width / 2)
-		&& (objectWithXAndY.x >= pc.x - canvas.width / 2)
-		&& (objectWithXAndY.y <= pc.x + canvas.height / 2)
-		&& (objectWithXAndY.y <= pc.x - canvas.height / 2)
+		(objectInSpaceX <= pc.x + canvas.width / 2)
+		&& (objectInSpaceX >= pc.x - canvas.width / 2)
+		&& (objectInSpaceY <= pc.x + canvas.height / 2)
+		&& (objectInSpaceY <= pc.x - canvas.height / 2)
 		) {
 		return true;	
 	}
@@ -110,10 +107,11 @@ var render = function() {
 	context.fillRect(0, 0, canvas.width, canvas.height);
 
 	
-
-	if (isOnScreen(stars.star1)) {
+	for (i = 0; i < stars.length; i++) {
 		context.fillStyle = "#FFFFFF";
-		context.fillRect(pc.renderX - (pc.x - stars.star1.x) , pc.renderY - (pc.y - stars.star1.y), 1, 1);
+		if (isOnScreen(stars[i][0], stars[i][1])) {
+			context.fillRect(pc.renderX - (pc.x - stars[i][0]) , pc.renderY - (pc.y - stars[i][1]), 1, 1);
+		}
 	}
 
 	if (pcReady) {
