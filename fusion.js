@@ -31,14 +31,11 @@ var pc = {
 
 var map = {
 	height : 10000,
-	width: 100000
+	width: 10000
 };
 
-var stars = [
-	[(map.width/2) + 50, (map.height/2) + 50],
-	[(map.width/2) - 45, (map.height/2) + 20],
-	[(map.width/2) + 150, (map.height/2) - 15]
-];
+var stars = [];
+var starsOnMap = 10000; 
 
 
 // User Input
@@ -52,6 +49,10 @@ var setup = function() {
 	pc.y = map.height / 2;
 	pc.renderX = canvas.width / 2;
 	pc.renderY = canvas.height / 2;
+
+	for (i = 0; i < starsOnMap; i++) {
+		stars.push([Math.random() * map.width, Math.random() * map.height]);
+	}
 };
 
 // Update
@@ -91,8 +92,8 @@ var isOnScreen = function(objectInSpaceX, objectInSpaceY) {
 	if (
 		(objectInSpaceX <= pc.x + canvas.width / 2)
 		&& (objectInSpaceX >= pc.x - canvas.width / 2)
-		&& (objectInSpaceY <= pc.x + canvas.height / 2)
-		&& (objectInSpaceY <= pc.x - canvas.height / 2)
+		&& (objectInSpaceY <= pc.y + canvas.height / 2)
+		&& (objectInSpaceY >= pc.y - canvas.height / 2)
 		) {
 		return true;	
 	}
