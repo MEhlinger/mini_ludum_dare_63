@@ -20,7 +20,7 @@ pcImage.onload = function() {
 	pcReady = true;
 };
 pcImage.src = "images/pc.png";
-
+pcImageSize = 32; //This shouldn't be hardcoded. FIX
 
 // Game Objects
 var pc = {
@@ -82,6 +82,9 @@ var update = function (modifier) {
 var render = function() {
 	context.clearRect(0, 0, canvas.width, canvas.height);
 
+	context.fillStyle = "#000000";
+	context.fillRect(0, 0, canvas.width, canvas.height);
+
 	if (pcReady) {
 		// render pc in center of view at all times...
 		pc.renderX = canvas.width / 2;
@@ -98,9 +101,8 @@ var render = function() {
 		} else if (pc.y <= canvas.height / 2) {
 			pc.renderY = pc.y;
 		}
-		context.drawImage(pcImage, pc.renderX, pc.renderY);
+		context.drawImage(pcImage, pc.renderX - pcImageSize/2, pc.renderY - pcImageSize/2);
 	}	
-	context.fillStyle = "rgb(253, 250, 255)";
 };
 
 // Main Loop
