@@ -20,7 +20,7 @@ pcImage.onload = function() {
 	pcReady = true;
 };
 pcImage.src = "images/pc.png";
-pcImageSize = 32; //This shouldn't be hardcoded. FIX
+pcImageSize = (pcImage.height + pcImage.width) / 2;
 
 // Game Objects
 var pc = {
