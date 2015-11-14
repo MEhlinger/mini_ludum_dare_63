@@ -87,17 +87,16 @@ var update = function (modifier) {
 	}
 };
 
-// Check if something on the map is on the canvas
 var isOnScreen = function(objectInSpaceX, objectInSpaceY) {
 	if (
-		(objectInSpaceX <= pc.x + canvas.width / 2)
-		&& (objectInSpaceX >= pc.x - canvas.width / 2)
-		&& (objectInSpaceY <= pc.y + canvas.height / 2)
-		&& (objectInSpaceY >= pc.y - canvas.height / 2)
+		(objectInSpaceX <= pc.x + canvas.width - (canvas.width - pc.renderX))
+		&& (objectInSpaceX >= pc.x - canvas.width - pc.renderX)
+		&& (objectInSpaceY <= pc.y + canvas.height - (canvas.height - pc.renderY))
+		&& (objectInSpaceY >= pc.y - canvas.height - pc.renderY)
 		) {
 		return true;	
 	}
-}
+};
 
 
 // Render Everything
