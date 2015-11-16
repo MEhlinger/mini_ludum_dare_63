@@ -53,6 +53,7 @@ var setup = function() {
 	for (i = 0; i < starsOnMap; i++) {
 		stars.push([Math.random() * map.width, Math.random() * map.height]);
 	}
+	stars.sort(function(a, b) {a[0] - b[0]}); // stars' x-values, sorted left->right
 };
 
 // Update
@@ -96,6 +97,7 @@ var isOnScreen = function(objectInSpaceX, objectInSpaceY) {
 		) {
 		return true;	
 	}
+	return false;
 };
 
 
@@ -107,10 +109,12 @@ var render = function() {
 	context.fillRect(0, 0, canvas.width, canvas.height);
 
 	
-	for (i = 0; i < stars.length; i++) {
-		context.fillStyle = "#FFFFFF";
+	context.fillStyle = "#FFFFFF";
+	//Below is a phenomenally pointless "optimization," not really.
+	xRangeStarRenderCandidates = [(pc.x < stars[stars.length/2][0]) ? 0 : stars.length/2, (pc.x < stars[stars.length/2][0]) ? stars.length / 2 : stars.length];
+	for (i = xRangeStarRenderCandidates[0]; i < xRangeStarRenderCandidates[1]; i++) {
 		if (isOnScreen(stars[i][0], stars[i][1])) {
-			context.fillRect(pc.renderX - (pc.x - stars[i][0]) , pc.renderY - (pc.y - stars[i][1]), 1, 1);
+			context.fillRect(pc.renderX - (pc.x - stars[i][0]) , pc.renderY - (pc.y - stars[i][1]), 1, 1)
 		}
 	}
 
